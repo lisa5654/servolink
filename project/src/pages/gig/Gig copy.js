@@ -1,57 +1,23 @@
-import React,{ useEffect,useState }  from "react";
+import React from "react";
 import "./Gig.css";
 import { Slider } from "infinite-react-carousel/lib";
-import { gigs } from "../../data";
-import { useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-  
+
 function Gig() {
-  const location = useLocation();
-  const [gigId, setGigId] = useState(null);
-  const [gigData, setGigData] = useState(null);
-
-  useEffect(() => {
-    // Get the pathname from the location object
-    const pathname = location.pathname;
-    
-    // Use regular expression to extract the last digit from the pathname
-    const lastDigit = pathname.match(/\d$/);
-    
-    // If a digit is found, set the corresponding gig ID
-    if (lastDigit && gigs[lastDigit[0]]) {
-      setGigId(gigs[lastDigit[0]].id);
-      
-    }
-  }, [location]);
-
- 
-
-  useEffect(() => {
-    // If gigId is set, set the corresponding gig data
-    if (gigId !== null) {
-      setGigData(gigs[gigId]);
-    }
-  }, [gigId]);
-
-
   return (
-  
     <div className="gig">
-        {gigData && (
       <div className="container">
         <div className="left">
         <span className="breadcrumbs">Liverr &gt; Graphics &amp; Design &gt;</span>
-          {/* <h1>{gigUsername}</h1> */}
+
 
           <h1>I will create ai generated art for you</h1>
           <div className="user">
             <img
               className="pp"
-              src={gigData.img} 
-              alt={gigData.desc} 
-             
+              src="https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt=""
             />
-            <span>{gigData.name} </span>
+            <span>Anna Bell</span>
             <div className="stars">
               <img src="/img/star.png" alt="" />
               <img src="/img/star.png" alt="" />
@@ -62,17 +28,13 @@ function Gig() {
             </div>
           </div>
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">
-          <img
-              className="pp"
-              src={gigData.img} 
-              alt={gigData.desc} 
-             
+            <img
+              src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt=""
             />
             <img
-              className="pp"
-              src={gigData.pp} 
-              alt={gigData.desc} 
-             
+              src="https://images.pexels.com/photos/1462935/pexels-photo-1462935.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt=""
             />
             <img
               src="https://images.pexels.com/photos/1054777/pexels-photo-1054777.jpeg?auto=compress&cs=tinysrgb&w=1600"
@@ -81,7 +43,19 @@ function Gig() {
           </Slider>
           <h2>About This Gig</h2>
           <p>
-          {gigData.desc}
+            I use an AI program to create images based on text prompts. This
+            means I can help you to create a vision you have through a textual
+            description of your scene without requiring any reference images.
+            Some things I've found it often excels at are: Character portraits
+            (E.g. a picture to go with your DnD character) Landscapes (E.g.
+            wallpapers, illustrations to compliment a story) Logos (E.g. Esports
+            team, business, profile picture) You can be as vague or as
+            descriptive as you want. Being more vague will allow the AI to be
+            more creative which can sometimes result in some amazing images. You
+            can also be incredibly precise if you have a clear image of what you
+            want in mind. All of the images I create are original and will be
+            found nowhere else. If you have any questions you're more than
+            welcome to send me a message.
           </p>
           <div className="seller">
             <h2>About The Seller</h2>
@@ -257,7 +231,7 @@ function Gig() {
         <div className="right">
           <div className="price">
             <h3>1 AI generated image</h3>
-            <h2>PKR {gigData.price}</h2>
+            <h2>PKR 3000</h2>
           </div>
           <p>
             I will create a unique high quality AI generated image based on a
@@ -294,7 +268,6 @@ function Gig() {
           <button>Continue</button>
         </div>
       </div>
-         )}
     </div>
   );
 }

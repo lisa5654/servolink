@@ -1,6 +1,6 @@
-import "./App.css";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import React from "react";
+import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
@@ -14,69 +14,43 @@ import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import MyGigs from "./pages/myGigs/MyGigs";
 
-function App() {
-  const Layout = () => {
-    return (
-      <div className="app">
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </div>
-    );
-  };
+function Layout() {
+  const location = useLocation();
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/gigs",
-          element: <Gigs />,
-        },
-        {
-          path: "/myGigs",
-          element: <MyGigs />,
-        },
-        {
-          path: "/orders",
-          element: <Orders />,
-        },
-        {
-          path: "/messages",
-          element: <Messages />,
-        },
-        {
-          path: "/message/:id",
-          element: <Message />,
-        },
-        {
-          path: "/add",
-          element: <Add />,
-        },
-        {
-          path: "/gig/:id",
-          element: <Gig />,
-        },
-      ],
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-  ]);
+  const showNavbarFooter = !['/login', '/register'].includes(location.pathname);
+  const [user, setUser] = useState(null);
   return (
-    <RouterProvider router={router}>
-      {/* Your RouterProvider component here */}
-    </RouterProvider>
+    <div className="app">
+    {showNavbarFooter && <Navbar user={user} />}
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/gigs" element={<Gigs />} />
+  <Route path="/myGigs" element={<MyGigs />} />
+  <Route path="/orders" element={<Orders />} />
+  <Route path="/messages" element={<Messages />} />
+  <Route path="/message/:id" element={<Message />} />
+  <Route path="/add" element={<Add />} />
+  <Route path="/gig/:id" element={<Gig />} />
+  <Route
+    path="/register"
+    element={<Register />}
+  />
+  <Route
+    path="/login"
+    element={<Login setUser={setUser} />}
+  />
+</Routes>
+{showNavbarFooter && <Footer />}
+</div>
+
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Layout />
+    </Router>
   );
 }
 

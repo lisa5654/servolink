@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar() {
+
+function Navbar({ user }) {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(user ? { id: 1, username: user.username } : null);
+  
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -19,12 +23,11 @@ function Navbar() {
     };
   }, []);
 
-  
-
-  const currentUser = {
-    id: 1,
-    username: "Elsa Soomro",
-    isSeller: true,
+  const handleLogout = () => {
+    // Reset currentUser to simulate logout
+    setCurrentUser(null);
+    // Redirect to home or login page after logout
+    navigate("/");
   };
 
   return (
@@ -42,39 +45,42 @@ function Navbar() {
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {currentUser ? (
-            <div className="user" onClick={()=>setOpen(!open)}>
+            <div className="user" onClick={() => setOpen(!open)}>
               <img
                 src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
+                alt="User"
               />
               <span>{currentUser?.username}</span>
-              {open && <div className="options">
-                {currentUser.isSeller && (
-                  <>
-                    <Link className="link" to="/mygigs">
-                      Gigs
-                    </Link>
-                    <Link className="link" to="/add">
-                      Add New Gig
-                    </Link>
-                  </>
-                )}
-                <Link className="link" to="/orders">
-                  Orders
-                </Link>
-                <Link className="link" to="/messages">
-                  Messages
-                </Link>
-                <Link className="link" to="/">
-                  Logout
-                </Link>
-              </div>}
+              {open && (
+                <div className="options">
+                  
+                    <>
+                      <Link className="link" to="/mygigs">
+                        Gigs
+                      </Link>
+                      <Link className="link" to="/add">
+                        Add New Gig
+                      </Link>
+                    </>
+                  
+                  <Link className="link" to="/orders">
+                    Orders
+                  </Link>
+                  <Link className="link" to="/messages">
+                    Messages
+                  </Link>
+                  <button className="link" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <>
-              <span>Sign in</span>
+              <span onClick={() => navigate("/login")}>Sign in</span>
               <Link className="link" to="/register">
                 <button>Join</button>
+                
               </Link>
             </>
           )}

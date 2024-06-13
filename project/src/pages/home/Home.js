@@ -6,16 +6,13 @@ import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
-import DataFetcher from "../datafetcher";
+
 
 function Home() {
   return (
     <div className="home">
       <Featured />
-      <div className="App">
-      <h1>Data from MongoDB</h1>
-      <DataFetcher id={2} />
-      </div>
+   
       <TrustedBy />
       <Slide slidesToShow={5} arrowsScroll={5}>
         {cards.map((card) => (
@@ -169,7 +166,7 @@ function Home() {
               Connect to freelancers with proven business experience
             </div>
 
-            <div className="title">
+            <div className="title"> 
               <img src="./img/check.png" alt="" />
               Get matched with the perfect talent by a customer success manager
             </div>
